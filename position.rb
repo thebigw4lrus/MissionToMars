@@ -9,9 +9,16 @@ class Position
   
   attr_accessor :x, :y
 
-  def initialize(*current_position)
-    @x = (current_position[0] || 0).to_i
-    @y = (current_position[1] || 0).to_i
+  def initialize(position)
+    if position.respond_to? :split
+      position = position.split(' ')     
+    end
+    @x = (position[0] || 0).to_i
+    @y = (position[1] || 0).to_i
+  end
+
+  def to_a
+    [@x, @y]
   end
 
 end

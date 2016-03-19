@@ -6,7 +6,7 @@
 =end
 class ExploreMarsMission
   
-  attr_accessor :initial_state
+  attr_accessor :input
 
   def self.run(&block)
     mission = ExploreMarsMission.new()
@@ -18,9 +18,17 @@ class ExploreMarsMission
   end
 
   def setup_mission
-    coordinate = @initial_state.shift
-    plateau ||= Plateau.new(coordinate)
-    @initial_state.each_slice(2) {|rover_input| @rovers << Rover.new(rover_input, plateau)}     
+    cardinal = @input.shift
+    @input.each_slice(2) do |rover_input|
+      coordinates = rover_input.first.split(' ')
+      orientation = coordinates.pop
+
+      position = Position.new(coordinates)
+      movements = rover_input.last
+      plateau = Plateau.new(cardinal)
+      @rovers << Rover.new(position, orientation,
+                           movements, plateau)
+    end
   end
 
   def begin_rovers_recon()

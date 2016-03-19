@@ -13,7 +13,7 @@ class MissionTestCases < Test::Unit::TestCase
     input = ["5 5", "1 2 N", "LMLMLMLMM", "3 3 E", "MMRMMRMRRM"]
     results =  
     ExploreMarsMission.run do 
-       @initial_state = input 
+       @input = input 
        setup_mission
        begin_rovers_recon
        get_rovers_location

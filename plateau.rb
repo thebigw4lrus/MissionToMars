@@ -15,8 +15,8 @@ class Plateau
     @y = dimensions.last.to_i
   end
 
-  def check_coordinates(x, y)
-  raise "err003-Coordinates out of Range" if (x > @x or y > @y)
+  def check_coord(x, y)
+    (x > @x || y > @y)
   end
 
 end

@@ -18,24 +18,36 @@ require_relative '../position'
 class RoversAcceptanceTestCases < Test::Unit::TestCase
 
   def test_case_initalize_rover
-    rover = Rover.new(["5 5 N", "LRLRLRMMM"], Plateau.new("5 5"))
+    position = Position.new('5 5')
+    plateau = Plateau.new('5 5')
+
+    rover = Rover.new(position, 'N', '', plateau)
     assert_equal "5 5 N", rover.get_position_and_direction
   end
 
   def test_case_rover_move_single_left
-    rover = Rover.new(["5 5 E", "LRLRLRMMM"], Plateau.new("5 5"))
+    position = Position.new('5 5')
+    plateau = Plateau.new('5 5')
+
+    rover = Rover.new(position, 'E', '', plateau)
     rover.execute_command("L")
     assert_equal "5 5 N", rover.get_position_and_direction
   end
 
   def test_case_rover_move_single_right
-    rover = Rover.new(["5 5 S", "LRLRLRMMM"], Plateau.new("5 5"))
+    position = Position.new('5 5')
+    plateau = Plateau.new('5 5')
+
+    rover = Rover.new(position, 'S', '', plateau)
     rover.execute_command("R")
     assert_equal "5 5 W", rover.get_position_and_direction
   end
 
   def test_case_rover_move_single_ahead
-    rover = Rover.new(["5 4 N", "LRLRLR"], Plateau.new("5 5"))
+    position = Position.new('5 4')
+    plateau = Plateau.new('5 5')
+
+    rover = Rover.new(position, 'N', '', plateau)
     rover.execute_command("M")
     assert_equal "5 5 N", rover.get_position_and_direction
   end

@@ -10,21 +10,22 @@ class Rover
   
   attr_accessor :position, :plateau
 
-  def initialize(position_and_movements, plateau)
-    position_args = position_and_movements[0].split
-    set_moving_direction position_args[2]
-    @position, @movements_list, @plateau = Position.new(position_args[0], position_args[1]), position_and_movements[1], plateau
+  def initialize(position, orientation, movements, plateau)
+    @position = position
+    @movements = movements
+    @plateau = plateau
+    set_direction(orientation)
   end
   def set_position(x, y)
     @position.x, @position.y = x, y
   end
   #State Setter
-  def set_moving_direction(direction)
-    case direction.capitalize 
-      when "N" then @moving_direction = North.new(self)
-      when "S" then @moving_direction = South.new(self)
-      when "E" then @moving_direction = East.new(self)
-      when "W" then @moving_direction = West.new(self)
+  def set_direction(direction)
+    @direction = case direction.capitalize 
+      when "N" then North.new(self)
+      when "S" then South.new(self)
+      when "E" then East.new(self)
+      when "W" then West.new(self)
       else raise "err002-direction unknown"
     end 
   end
@@ -34,18 +35,18 @@ class Rover
   end
 
   def get_position_and_direction
-    get_position <<  " " << @moving_direction.get_alias
+    get_position <<  " " << @direction.get_alias
   end
 
   def execute_movement_batch
-    @movements_list.split('').each {|move| execute_command(move)}
+    @movements.split('').each {|move| execute_command(move)}
   end
-  #Using this methods the state can be changed
+
   def execute_command(command)
     case command.capitalize
-      when "L" then @moving_direction.turn_left
-      when "R" then @moving_direction.turn_right
-      when "M" then @moving_direction.move
+      when "L" then @direction.turn_left
+      when "R" then @direction.turn_right
+      when "M" then @direction.move
       else raise "err001-command unknown"
     end 
   end

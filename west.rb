@@ -9,15 +9,15 @@ class West
   include Direction
    
   def turn_right()
-    @rover.set_moving_direction("N")
+    @rover.set_direction("N")
   end
 
   def turn_left()
-    @rover.set_moving_direction("S")
+    @rover.set_direction("S")
   end
 
   def move()
-    @rover.set_position(rover.position.x - 1, rover.position.y) unless @rover.plateau.check_coordinates(rover.position.x - 1, rover.position.y)
+    @rover.position.x -= 1
   end
 
   def get_alias
